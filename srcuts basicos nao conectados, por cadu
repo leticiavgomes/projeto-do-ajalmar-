@@ -1,0 +1,42 @@
+#include <stdio.h>
+  
+  struct estado{
+    char codigo[3];
+    char nome[17];
+    char sigla[3];
+  } estd;
+
+struct elitor{
+  char titulo[15];
+  char nome[50];
+  char fone[20];
+  char endereço[35];
+  char Dnasci[12];
+  char CPF[12];
+} eleitor;
+ 
+ struct candidato{
+   char numero[3];
+   char nome[50];
+   char fone[20];
+   char endereço[35];
+   char Dnasci[12];
+   } candit;
+  
+  struct voto{
+    char nun_cand [3];
+    char codigo_eleiçao[10];
+    char data_hora[15];
+  } voto;
+  
+  struct eleição{
+    char ano[6];
+    char descrição[20];
+    char codigo_uf[3]
+    char codigo[10];
+  } eleção;
+  
+  struct comparecimento{
+    titulo[15];
+    codigo_eleção[10];
+  }veio;
