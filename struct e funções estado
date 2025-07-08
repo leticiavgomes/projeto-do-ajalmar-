@@ -1,0 +1,9 @@
+struct estado{
+    int codigo[3];
+    char nome[20];
+    char sigla[3];
+} estd;
+
+void cad_estado() {
+    
+}
