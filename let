@@ -1,0 +1,68 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <locale.h>
+
+struct UF {
+    int id;
+    char sigla[4];
+    char descricao[100];
+
+};
+
+
+int main() {
+    setlocale(LC_ALL, "Portuguese");
+    FILE *f;
+    f = fopen("UF.dat", "rb+");
+    if (f == NULL) {
+        f = fopen("UF.dat", "wb+");
+    }
+    struct UF **uf;
+    int total = 0;
+    int capacidade = 5;
+    char continuar;
+    uf = malloc(sizeof(struct UF *)*capacidade);
+    do {
+        uf[total] = malloc(sizeof(struct UF));
+
+        printf("Insira o id:");
+        scanf("%d", &uf[total]->id);
+        getchar();
+        printf("Insira o sigla:");
+        fgets(uf[total]->sigla, sizeof(uf[total]->sigla), stdin);
+        uf[total]->sigla[strlen(uf[total]->sigla)] = '\0';
+        printf("Insira o descricao:");
+        fgets(uf[total]->descricao, sizeof(uf[total]->descricao), stdin);
+        fseek(f, 0, SEEK_END);
+        fwrite(uf[total], sizeof(struct UF), 1, f);
+        total++;
+
+        printf("continuar? ");
+        scanf(" %c", &continuar);
+        getchar();
+        if (total == capacidade) {
+            capacidade *= 2;
+            uf = realloc(uf, sizeof(struct UF *)*(capacidade));
+        }
+
+
+    }while (continuar == 's' || continuar == 'S');
+int j;
+    printf("\n=== UF cadastradas ===\n");
+    for (int i = 0; i < total; i++) {
+        printf("ID: %d\n", uf[i]->id);
+        printf("Sigla: %s\n", uf[i]->sigla);
+        printf("Descrição: %s\n", uf[i]->descricao);
+        j = ftell(f);
+        printf("Tamanho: %d\n", j);
+    }
+
+    for (int i = 0; i < total; i++) {
+        free(uf[i]);
+    }
+    free(uf);
+    fclose(f);
+    return 0;
+
+}
