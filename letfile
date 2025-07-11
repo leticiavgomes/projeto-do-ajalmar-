@@ -21,9 +21,24 @@ int main() {
     struct UF **uf;
     int total = 0;
     int capacidade = 5;
-    char continuar;
     uf = malloc(sizeof(struct UF *)*capacidade);
+    int tam;
+    fseek(f, 0, SEEK_END);
+    tam = ftell(f);
+    fseek(f, 0, SEEK_SET);
+    int qtd = tam/sizeof(struct UF);
+
+
+    for (int i = 0; i < qtd; i++) {
+        uf[i] = malloc(sizeof(struct UF));
+        fread(uf[i], sizeof(struct UF), 1, f);
+
+    }
+    total = qtd;
+    char continuar;
+
     do {
+
         uf[total] = malloc(sizeof(struct UF));
 
         printf("Insira o id:");
@@ -38,6 +53,7 @@ int main() {
         fwrite(uf[total], sizeof(struct UF), 1, f);
         total++;
 
+
         printf("continuar? ");
         scanf(" %c", &continuar);
         getchar();
@@ -48,7 +64,7 @@ int main() {
 
 
     }while (continuar == 's' || continuar == 'S');
-int j;
+    int j;
     printf("\n=== UF cadastradas ===\n");
     for (int i = 0; i < total; i++) {
         printf("ID: %d\n", uf[i]->id);
